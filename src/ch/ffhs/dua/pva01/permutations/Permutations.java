@@ -2,6 +2,7 @@ package ch.ffhs.dua.pva01.permutations;
 
 import edu.princeton.cs.algs4.StdOut;
 
+import edu.princeton.cs.algs4.Stopwatch;
 import java.util.Arrays;
 
 import java.text.DecimalFormat;
@@ -22,9 +23,13 @@ public class Permutations {
    * permutations.
    */
   public static void main(String[] args) {
-    int[][] permutations = permutations(3);
+    Stopwatch timer = new Stopwatch();
 
+    int[][] permutations = permutations(10);
+
+    Double time = timer.elapsedTime();
     printPermutations(permutations);
+    System.out.printf("Run time: %s", time);
   }
 
   /**
