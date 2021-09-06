@@ -25,7 +25,7 @@ public class Permutations {
   public static void main(String[] args) {
     Stopwatch timer = new Stopwatch();
 
-    int[][] permutations = permutations(10);
+    int[][] permutations = permutations(11);
 
     Double time = timer.elapsedTime();
     printPermutations(permutations);

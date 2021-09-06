@@ -61,39 +61,6 @@ public class Area {
     return possibleBricks;
   }
 
-  // Check and return the uncovered neighbors of a given tile.
-  private List<Tile> findUncoveredNeighbors(Tile tile) {
-    List<Tile> neighbors = new ArrayList<>();
-    List<Tile> uncoveredNeighbors = new ArrayList<>();
-
-    final int x = tile.getXPos();
-    final int y = tile.getYPos();
-
-    // tiles at the border of the area have one or two neighbors less.
-    // avoid right border overflow
-    if (x + 1 < width) {
-      neighbors.add(tiles[x + 1][y]);
-    }
-    // avoid left border overflow
-    if (x - 1 >= 0) {
-      neighbors.add(tiles[x - 1][y]);
-    }
-    // avoid top border overflow
-    if (y + 1 < height) {
-      neighbors.add(tiles[x][y + 1]);
-    }
-    // avoid bottom border overflow
-    if (y - 1 >= 0) {
-      neighbors.add(tiles[x][y - 1]);
-    }
-
-    // store neighboring tiles that are not yet covered
-    for (Tile neighbor : neighbors) {
-      if (neighbor.isUncovered()) uncoveredNeighbors.add(neighbor);
-    }
-
-    return uncoveredNeighbors;
-  }
 
   /**
    * Cover the two tiles with a brick.
@@ -132,6 +99,41 @@ public class Area {
     }
     return area;
   }
+
+  // Check and return the uncovered neighbors of a given tile.
+  private List<Tile> findUncoveredNeighbors(Tile tile) {
+    List<Tile> neighbors = new ArrayList<>();
+    List<Tile> uncoveredNeighbors = new ArrayList<>();
+
+    final int x = tile.getXPos();
+    final int y = tile.getYPos();
+
+    // tiles at the border of the area have one or two neighbors less.
+    // avoid right border overflow
+    if (x + 1 < width) {
+      neighbors.add(tiles[x + 1][y]);
+    }
+    // avoid left border overflow
+    if (x - 1 >= 0) {
+      neighbors.add(tiles[x - 1][y]);
+    }
+    // avoid top border overflow
+    if (y + 1 < height) {
+      neighbors.add(tiles[x][y + 1]);
+    }
+    // avoid bottom border overflow
+    if (y - 1 >= 0) {
+      neighbors.add(tiles[x][y - 1]);
+    }
+
+    // store neighboring tiles that are not yet covered
+    for (Tile neighbor : neighbors) {
+      if (neighbor.isUncovered()) uncoveredNeighbors.add(neighbor);
+    }
+
+    return uncoveredNeighbors;
+  }
+
 
 
   @Override
