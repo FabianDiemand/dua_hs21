@@ -32,13 +32,14 @@ public class NKnightsProblem {
   }
 
   public static void main(String[] args) {
-    int boardSize = 12;
+    int boardSize = 8;
     NKnightsProblem knightsProblem = new NKnightsProblem(boardSize);
 
     if (knightsProblem.solveKnightsProblem(0, 0)) {
+      StdOut.printf("\nFound the following solution for board of size: %sx%s\n", boardSize, boardSize);
       knightsProblem.printBoard();
     } else {
-      StdOut.printf("No solution for board of size: %sx%s", boardSize, boardSize);
+      StdOut.printf("\nNo solution for board of size: %sx%s\n", boardSize, boardSize);
     }
   }
 
@@ -51,9 +52,9 @@ public class NKnightsProblem {
 
       if (knightFits(newCol, newRow)) {
         numOfMoves += 1;
-        boolean solvable = solveKnightsProblem(newCol, newRow);
+        boolean pathContinues = solveKnightsProblem(newCol, newRow);
 
-        if (!solvable) {
+        if (!pathContinues) {
           board[newCol][newRow] = -1;
           numOfMoves -= 1;
         } else {
@@ -74,9 +75,9 @@ public class NKnightsProblem {
   }
 
   private boolean isOnBoard(int newCol, int newRow) {
-    boolean validX = newCol >= 0 && newCol < n;
-    boolean validY = newRow >= 0 && newRow < n;
-    return validX && validY;
+    boolean validCol = newCol >= 0 && newCol < n;
+    boolean validRow = newRow >= 0 && newRow < n;
+    return validCol && validRow;
   }
 
   private void printBoard() {
