@@ -1,6 +1,7 @@
 package ch.ffhs.dua.pva04.nknightsproblem;
 
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.Stopwatch;
 import java.util.Arrays;
 
 /**
@@ -15,6 +16,8 @@ public class NKnightsProblem {
   // 2D-Array representation of a chessboard
   private final int[][] board;
 
+  public int counter;
+
   // All the move deltas of a knight on a chessboard
   private final int[][] knightsDeltas =
       new int[][] {
@@ -23,8 +26,8 @@ public class NKnightsProblem {
         {2, 1},
         {1, 2},
         {-1, 2},
-        {-2, 1},
         {-2, -1},
+        {-2, 1},
         {-1, -2}
       };
 
@@ -67,7 +70,10 @@ public class NKnightsProblem {
     int col = Integer.parseInt(args[2]);
 
     NKnightsProblem knightsProblem = new NKnightsProblem(boardSize);
+    Stopwatch s = new Stopwatch();
     knightsProblem.solveKnightsProblem(row, col);
+    System.out.println(s.elapsedTime());
+    System.out.println(knightsProblem.counter);
   }
 
   // Solve the problem and create output according to the outcome.
@@ -108,6 +114,7 @@ public class NKnightsProblem {
           // If the path continues, leave the loop
           break;
         } else {
+          counter++;
           // If the path cannot continue with the current delta
           // mark the next position as unvisited ...
           board[newRow][newCol] = -1;

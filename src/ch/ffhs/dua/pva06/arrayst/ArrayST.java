@@ -35,6 +35,8 @@ public class ArrayST<K extends Comparable<K>, V extends Comparable<V>> {
       StdOut.printf("%s ", arrayST.get(key));
     }
 
+    StdOut.printf("\n\nMost/ Last looked up pair is: [key=%s, value=%s]", arrayST.getFirstPair().getKey(), arrayST.getFirstPair().getValue());
+
     // Demo min, Demo max
     StdOut.printf("\n\nSmallest key in the list: %s\n", arrayST.min());
     StdOut.printf("Greatest key in the list: %s\n", arrayST.max());
@@ -48,7 +50,7 @@ public class ArrayST<K extends Comparable<K>, V extends Comparable<V>> {
     arrayST.delete(4);
     StdOut.printf(numOfEntriesListLength, arrayST.size(), arrayST.length());
     arrayST.delete(5);
-    StdOut.printf(numOfEntriesListLength, arrayST.size(), arrayST.length());
+    StdOut.printf(                numOfEntriesListLength, arrayST.size(), arrayST.length());
     StdOut.println();
 
     // Negative demo for contains
@@ -71,12 +73,22 @@ public class ArrayST<K extends Comparable<K>, V extends Comparable<V>> {
    * @param value the value to be put into the list
    */
   public void put(K key, V value){
-
     // a value of null results in the pair being deleted
     if(value == null){
       delete(key);
       return;
     }
+
+    for(int i = 0; i < size; i++){
+      if(data[i].getKey() == key){
+        KeyValuePair<K, V> pair = new KeyValuePair<>(key, value);
+        delete(key);
+        data[size] = pair;
+        size += 1;
+        return;
+      }
+    }
+
 
     // double the length of the list, if the current boundary would be exceeded
     if(size == data.length){
@@ -100,7 +112,12 @@ public class ArrayST<K extends Comparable<K>, V extends Comparable<V>> {
 
       // return the value if the keys match
       if(data[i].getKey() == key){
-        return data[i].getValue();
+
+        V value = data[i].getValue();
+
+        shiftToFront(i);
+
+        return value;
       }
     }
 
@@ -195,7 +212,6 @@ public class ArrayST<K extends Comparable<K>, V extends Comparable<V>> {
 
     return tempMin;
   }
-
   /**
    * Get the greatest key of all pairs stored in the list
    * @return the greatest key
@@ -228,6 +244,34 @@ public class ArrayST<K extends Comparable<K>, V extends Comparable<V>> {
     }
 
     return queue;
+  }
+
+  /**
+   * Shift the desired index to the front
+   *
+   * @param index the index of the pair to move to the front
+   */
+  @SuppressWarnings("unchecked")
+  private void shiftToFront(int index){
+    KeyValuePair<K, V>[] temp = new KeyValuePair[data.length];
+
+    temp[0] = data[index];
+    int j = 1;
+
+    for(int i = 0; i < size; i++){
+      if(i == index){
+        continue;
+      }
+
+      temp[j] = data[i];
+      j += 1;
+    }
+
+    data = temp;
+  }
+
+  public KeyValuePair<K, V> getFirstPair(){
+    return data[0];
   }
 
   // Get the length of the list (! not the # of entries !)
